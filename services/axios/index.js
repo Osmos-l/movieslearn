@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const BASE_URL = 'https://api.themoviedb.org/3/';
-const API_KEY = '44676e614d5927b0e2964996efe4f103';
+const API_KEY = '';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
