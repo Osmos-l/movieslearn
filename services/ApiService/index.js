@@ -6,6 +6,7 @@ export const makeGetRequest = async (endpoint, params) => {
     return response.data;
   } catch (error) {
     console.error('An error occurred during the axios request');
+    console.error(error);
     return [];
   }
 };

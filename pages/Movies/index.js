@@ -1,7 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {Button, FlatList, Text, View, SafeAreaView} from 'react-native';
+import {Button, FlatList, Text, View, SafeAreaView, StyleSheet, StatusBar} from 'react-native';
 import {getMoviesByPage} from '../../services/TMDBService';
 import MovieComponent from '../../components/Movie';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  title: {
+    textAlign: 'center',
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 5
+  }
+});
+
 
 const MoviesScreen = ({ navigation }) => {
   const [movies, setMovies] = useState([]);
@@ -25,15 +39,15 @@ const MoviesScreen = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView>
-      <Text>What do we watch today ?</Text>
-      <Text>Avaibles movies: {movies.length}</Text>
-      <FlatList data={movies}
-                renderItem={renderItem}
-                onEndReachedThreshold={0.5}
-                onEndReached={fetchMoreMovies}
-                numColumns={2}
-      />
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>Popular Movies</Text>
+      <View style={styles.container}>
+        <FlatList data={movies}
+                  renderItem={renderItem}
+                  onEndReachedThreshold={0.5}
+                  onEndReached={fetchMoreMovies}
+        />
+      </View>
     </SafeAreaView>
   );
 };
