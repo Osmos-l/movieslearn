@@ -22,14 +22,16 @@ const styles = StyleSheet.create({
   }
 });
 
-const PopularMovieListItem = ({movie}) => {
+const PopularMovieListItem = ({movie, navigation}) => {
   if (!movie)
       return
 
   const background_uri = `https://image.tmdb.org/t/p/original//${movie.backdrop_path}`
 
   const openMovieDetail = () => {
-    Alert.alert("nice");
+    navigation.navigate("Details", {
+      movie
+    });
   }
 
   return (

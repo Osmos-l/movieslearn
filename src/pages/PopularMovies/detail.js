@@ -1,11 +1,26 @@
 import React from "react";
-import { View } from "react-native";
+import { Button, SafeAreaView, StyleSheet, Text } from "react-native";
 
-const PopularMovieDetailScreen = () => {
+const styles = StyleSheet.create({
+  title: {
+    textAlign: 'center',
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 5
+  },
+});
+
+const PopularMovieDetailScreen = ({ route, navigation }) => {
+  const { movie } = route.params;
+
+  if (!movie)
+    return
+
   return (
-    <View>
-
-    </View>
+    <SafeAreaView>
+      <Text style={styles.title}>{movie.title}</Text>
+      <Button title="Go back" onPress={() => navigation.goBack()} />
+    </SafeAreaView>
   );
 };
 

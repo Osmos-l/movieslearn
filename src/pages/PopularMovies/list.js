@@ -34,7 +34,7 @@ const PopularMoviesListScreen = ({ navigation }) => {
   }, [moviePaginnation]);
 
   const renderItem = ({item, index, sep}) => (
-    <PopularMovieListItem movie={item} />
+    <PopularMovieListItem movie={item} navigation={navigation} />
   );
 
   return (
