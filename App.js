@@ -5,8 +5,9 @@ import {useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import MoviesScreen from './pages/Movies';
-import ProfileScreen from './pages/Profile';
+import MoviesScreen from './src/pages/PopularMovies';
+import ProfileScreen from './src/pages/Profile';
+import PopularMoviesIndex from "./src/pages/PopularMovies";
 
 const Tab = createBottomTabNavigator();
 const App: () => Node = () => {
@@ -21,10 +22,9 @@ const App: () => Node = () => {
       <Tab.Navigator screenOptions={{headerShown: false}}>
         <Tab.Screen
           name="Home"
-          component={MoviesScreen}
-          options={{title: 'Movies'}}
+          component={PopularMoviesIndex}
         />
-        <Tab.Screen name="Favorites" component={MoviesScreen} />
+        <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

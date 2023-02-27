@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Button, FlatList, Text, View, SafeAreaView, StyleSheet, StatusBar} from 'react-native';
 import {getMoviesByPage} from '../../services/TMDBService';
-import MovieComponent from '../../components/Movie';
+import PopularMovieListItem from '../../components/PopularMovieListItem';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,8 +16,7 @@ const styles = StyleSheet.create({
   }
 });
 
-
-const MoviesScreen = ({ navigation }) => {
+const PopularMoviesListScreen = ({ navigation }) => {
   const [movies, setMovies] = useState([]);
   const [moviePaginnation, setPage] = useState(1);
 
@@ -26,17 +25,17 @@ const MoviesScreen = ({ navigation }) => {
     setMovies([...movies, ...fetchedMovies]);
   }
 
+  const fetchMoreMovies = () => {
+    setPage(moviePaginnation + 1);
+  }
+
   useEffect(() => {
     fetchMoviesByPage(moviePaginnation);
   }, [moviePaginnation]);
 
   const renderItem = ({item, index, sep}) => (
-    <MovieComponent movie={item} />
+    <PopularMovieListItem movie={item} />
   );
-
-  const fetchMoreMovies = () => {
-    setPage(moviePaginnation + 1);
-  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -44,6 +43,7 @@ const MoviesScreen = ({ navigation }) => {
       <View style={styles.container}>
         <FlatList data={movies}
                   renderItem={renderItem}
+                  keyExtractor={item => item.id}
                   onEndReachedThreshold={0.5}
                   onEndReached={fetchMoreMovies}
         />
@@ -52,4 +52,4 @@ const MoviesScreen = ({ navigation }) => {
   );
 };
 
-export default MoviesScreen;
+export default PopularMoviesListScreen;
