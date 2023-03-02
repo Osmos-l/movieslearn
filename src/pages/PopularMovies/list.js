@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Button, FlatList, Text, View, SafeAreaView, StyleSheet, StatusBar} from 'react-native';
+import React, { useEffect, useState } from "react";
+import {FlatList, Text, View, SafeAreaView, StyleSheet, StatusBar} from 'react-native';
 import {getMoviesByPage} from '../../services/TMDBService';
 import PopularMovieListItem from '../../components/PopularMovieListItem';
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { Image, Text, View, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { IMAGE_URI } from '../../services/TMDBService';
 
 const styles = StyleSheet.create({
   logo: {
@@ -26,7 +27,7 @@ const PopularMovieListItem = ({movie, navigation}) => {
   if (!movie)
       return
 
-  const background_uri = `https://image.tmdb.org/t/p/original//${movie.backdrop_path}`
+  const background_uri = `${IMAGE_URI}${movie.backdrop_path}`
 
   const openMovieDetail = () => {
     navigation.navigate("Details", {
