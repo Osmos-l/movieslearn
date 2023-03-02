@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StatusBar, StyleSheet, TextInput } from "react-native";
+import { debounce } from "lodash";
 
 const styles = StyleSheet.create({
   searchBar: {
@@ -12,21 +13,18 @@ const styles = StyleSheet.create({
 });
 
 const SearchBar = ({ onSearchPhraseUpdate }) => {
-  const [searchPhrase, setSearchPhrase] = useState("");
-
-  const onChangeText = (value) => {
-    setSearchPhrase(value);
+  const onChangeText = debounce((value) => {
+    console.log(value);
     if (onSearchPhraseUpdate && typeof onSearchPhraseUpdate === "function")  {
       onSearchPhraseUpdate(value);
     }
-  }
+  }, 200);
 
   return (
     <TextInput
       style={styles.searchBar}
       placeholder="Search"
       onChangeText={onChangeText}
-      value={searchPhrase}
     />
   );
 };

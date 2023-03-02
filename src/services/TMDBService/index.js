@@ -2,7 +2,7 @@ import {makeGetRequest} from '../ApiService';
 
 export const IMAGE_URI = "https://image.tmdb.org/t/p/original//"
 
-export const getMoviesByPage = async page => {
+export const getPopularMoviesByPage = async page => {
   const response = await makeGetRequest('movie/popular', {page});
   if (response.results) {
     return response.results;
@@ -11,17 +11,20 @@ export const getMoviesByPage = async page => {
   return [];
 };
 
-export const searchMoviesByName = async name => {
+export const searchMoviesByNameAndPage = async (name, page) => {
   name = name.replace(' ', '+');
+  page = Number.isInteger(page) ? page : 1;
 
   const params = {
-    query: name
+    query: name,
+    page
   };
 
-  const response = await makeGetRequest('search/movie', params)
+  const response = await makeGetRequest('search/movie', params);
   if (response.results) {
     return response.results;
   }
+
   // An error occurred
   return [];
 }
