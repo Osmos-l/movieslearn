@@ -30,18 +30,18 @@ const PopularMoviesListScreen = ({ navigation }) => {
 
   // Other
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchMoviesByPage = async () => {
-    setLoading(true);
-
     const fetchedMovies = await (searchPhrase && searchPhrase.length > 0 ?
       searchMoviesByNameAndPage(searchPhrase, page) : getPopularMoviesByPage(page))
 
     const movies = page === 1 ? fetchedMovies : [...movies, ...fetchedMovies]
     setMovies(movies);
 
-    setLoading(false);
+    if (loading) {
+      setLoading(false);
+    }
   }
 
   const fetchMoreMovies = () => {
@@ -57,6 +57,8 @@ const PopularMoviesListScreen = ({ navigation }) => {
   );
 
   const onSearchPhraseUpdate = (value) => {
+    setLoading(true);
+
     setSearchPhrase(value);
 
     if (page != 1) {
