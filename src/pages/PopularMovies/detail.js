@@ -37,7 +37,6 @@ const PopularMovieDetailScreen = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Button title="Go back" onPress={() => navigation.goBack()} />
       <Image
         style={styles.logo}
         source={{

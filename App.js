@@ -5,7 +5,6 @@ import {useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import MoviesScreen from './src/pages/PopularMovies';
 import ProfileScreen from './src/pages/Profile';
 import PopularMoviesIndex from "./src/pages/PopularMovies";
 
@@ -23,11 +22,22 @@ const App: () => Node = () => {
         <Tab.Screen
           name="Home"
           component={PopularMoviesIndex}
+
+          options={{
+            tabBarIcon: ({ color, size }) => false,
+          }}
         />
-        <Tab.Screen name="Profile" component={ProfileScreen} />
+        <Tab.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => false,
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
-};
+
+}
 
 export default App;

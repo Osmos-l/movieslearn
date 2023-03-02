@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {FlatList, Text, View, SafeAreaView, StyleSheet, StatusBar} from 'react-native';
-import {getMoviesByPage} from '../../services/TMDBService';
+import { FlatList, Text, View, SafeAreaView, StyleSheet, StatusBar, TextInput } from "react-native";
+import { getMoviesByPage, searchMoviesByName } from "../../services/TMDBService";
 import PopularMovieListItem from '../../components/PopularMovieListItem';
+import SearchBar from '../../components/SearchBar';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +23,13 @@ const PopularMoviesListScreen = ({ navigation }) => {
 
   const fetchMoviesByPage = async page => {
     const fetchedMovies = await getMoviesByPage(page);
-    setMovies([...movies, ...fetchedMovies]);
+
+    if (page === 1) {
+      setMovies(fetchedMovies);
+    } else {
+      setMovies([...movies, ...fetchedMovies]);
+    }
+
   }
 
   const fetchMoreMovies = () => {
@@ -37,10 +44,21 @@ const PopularMoviesListScreen = ({ navigation }) => {
     <PopularMovieListItem movie={item} navigation={navigation} />
   );
 
+  const onSearchPhraseUpdate = async (value) => {
+    if (value && value.length > 0) {
+      setMovies(await searchMoviesByName(value));
+    } else {
+      setPage(1);
+      await fetchMoviesByPage(1);
+    }
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Popular Movies</Text>
-      <View style={styles.container}>
+      <SearchBar
+        onSearchPhraseUpdate={onSearchPhraseUpdate}
+      />
+      <View>
         <FlatList data={movies}
                   renderItem={renderItem}
                   keyExtractor={item => item.id}

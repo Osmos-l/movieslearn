@@ -11,16 +11,17 @@ export const getMoviesByPage = async page => {
   return [];
 };
 
-export const getImageByMovie = async movie => {
-  if (!movie) {
-    return [];
-  }
+export const searchMoviesByName = async name => {
+  name = name.replace(' ', '+');
 
-  const response = await makeGetRequest(`/movie/${movie.id}/images`);
+  const params = {
+    query: name
+  };
+
+  const response = await makeGetRequest('search/movie', params)
   if (response.results) {
     return response.results;
   }
-
-  // An error occured
+  // An error occurred
   return [];
-};
+}

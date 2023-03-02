@@ -9,9 +9,14 @@ const Stack = createNativeStackNavigator();
 const PopularMoviesIndex = () => {
   return (
     <NavigationContainer independent={true}>
-      <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Home" component={PopularMoviesListScreen} />
-        <Stack.Screen name="Details" component={PopularMovieDetailScreen} />
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+            name="Home"
+            component={PopularMoviesListScreen}
+            options={{ title: 'Popular Movies' }} />
+        <Stack.Screen
+          name="Details"
+          component={PopularMovieDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
