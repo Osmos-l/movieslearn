@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, Text, View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { IMAGE_URI } from '../../services/TMDBService';
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const styles = StyleSheet.create({
   logo: {
@@ -16,7 +17,9 @@ const styles = StyleSheet.create({
   },
   note: {
     textAlign: 'right',
-    fontStyle: 'italic'
+    fontStyle: 'italic',
+    fontSize: 12,
+    marginRight: 5
   },
   desc: {
     padding: 5
@@ -46,9 +49,11 @@ const PopularMovieListItem = ({movie, navigation}) => {
         />
         <Text style={styles.title}>{movie.title}</Text>
         <Text style={styles.note}>
-          Note: {movie.vote_average} ({movie.vote_count} votes)
+          {movie.vote_average} <Icon name="star" size={12} color="black" />
         </Text>
-        <Text style={styles.desc}>
+        <Text
+          numberOfLines={5}
+          style={styles.desc}>
           {movie.overview}
         </Text>
       </View>
