@@ -4,21 +4,21 @@ import { debounce } from "lodash";
 
 const styles = StyleSheet.create({
   searchBar: {
-    borderWidth: 1,
     margin: 5,
     padding: 5,
     borderRadius: 10,
-    fontSize: 20
+    fontSize: 20,
+    backgroundColor: 'rgb(240, 240, 240)'
   }
 });
 
+const DEBOUNCE_TIME = 300; // MS
 const SearchBar = ({ onSearchPhraseUpdate }) => {
   const onChangeText = debounce((value) => {
-    console.log(value);
     if (onSearchPhraseUpdate && typeof onSearchPhraseUpdate === "function")  {
       onSearchPhraseUpdate(value);
     }
-  }, 200);
+  }, DEBOUNCE_TIME);
 
   return (
     <TextInput
