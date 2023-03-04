@@ -7,6 +7,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import ProfileScreen from './src/pages/Profile';
 import PopularMoviesIndex from "./src/pages/PopularMovies";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Tab = createBottomTabNavigator();
 const App: () => Node = () => {
@@ -24,14 +25,24 @@ const App: () => Node = () => {
           component={PopularMoviesIndex}
 
           options={{
-            tabBarIcon: ({ color, size }) => false,
+            tabBarShowLabel: false,
+            tabBarIcon: ({color, focused, size}) => {
+              return (
+                <Icon name="home" size={size} color={color} />
+              )
+            }
           }}
         />
         <Tab.Screen
           name="Profile"
           component={ProfileScreen}
           options={{
-            tabBarIcon: ({ color, size }) => false,
+            tabBarShowLabel: false,
+            tabBarIcon: ({color, focused, size}) => {
+              return (
+                <Icon name="user-circle" size={size} color={color} />
+              )
+            }
           }}
         />
       </Tab.Navigator>
