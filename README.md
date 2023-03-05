@@ -13,3 +13,15 @@ App.js (Tab.Navigator)
 
 # Database
 TMDB
+
+# TODO:
+- SearchBar
+  - Add Search icon
+  - Add cancel button as icon
+
+- Movie details
+  - Patch image size
+  - List of recommendations
+  - Where to watch
+
+

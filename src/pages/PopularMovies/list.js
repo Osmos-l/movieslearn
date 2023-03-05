@@ -3,6 +3,7 @@ import { FlatList, Text, View, SafeAreaView, StyleSheet, StatusBar, ActivityIndi
 import { getPopularMoviesByPage, searchMoviesByNameAndPage } from "../../services/TMDBService";
 import PopularMovieListItem from '../../components/PopularMovieListItem';
 import SearchBar from '../../components/SearchBar';
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const styles = StyleSheet.create({
   container: {
@@ -16,9 +17,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5
   },
-  noFound: {
-    textAlign: 'center',
-    verticalAlign: 'center'
+  secondContainer: {
+    flex: 2,
+  },
+  nothingFound: {
+    flex: 3,
+    justifyContent: 'center', //Centered horizontally
+    alignItems: 'center'
   }
 });
 
@@ -27,18 +32,21 @@ const PopularMoviesListScreen = ({ navigation }) => {
   const [movies, setMovies] = useState([]);
 
   // SearchBar
-  const [searchPhrase, setSearchPhrase] = useState([]);
+  const [searchPhrase, setSearchPhrase] = useState(null);
 
   // Other
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [nothingFound, setNothingFound] = useState(false);
 
   const fetchMoviesByPage = async () => {
     const fetchedMovies = await (searchPhrase && searchPhrase.length > 0 ?
       searchMoviesByNameAndPage(searchPhrase, page) : getPopularMoviesByPage(page))
 
-    const movies = page === 1 ? fetchedMovies : [...movies, ...fetchedMovies]
-    setMovies(movies);
+    const newMovies = page === 1 ? fetchedMovies : movies.concat(fetchedMovies);
+
+    setNothingFound(!newMovies || newMovies.length <= 0);
+    setMovies(newMovies);
 
     if (loading) {
       setLoading(false);
@@ -50,7 +58,7 @@ const PopularMoviesListScreen = ({ navigation }) => {
   }
 
   useEffect(() => {
-      fetchMoviesByPage();
+        fetchMoviesByPage();
   }, [page, searchPhrase]);
 
   const renderItem = ({item, index, sep}) => (
@@ -60,38 +68,45 @@ const PopularMoviesListScreen = ({ navigation }) => {
   const onSearchPhraseUpdate = (value) => {
     setLoading(true);
 
+    if (page != 1) {
+      setPage(1);
+    }
+
     setSearchPhrase(value);
+  }
+
+  const onSearchClear = () => {
+   // setLoading(true);
 
     if (page != 1) {
       setPage(1);
     }
-  }
 
-  const MoviesList = () => {
-    if (movies && movies.length > 0) {
-      return (
-        <FlatList data={movies}
-                  renderItem={renderItem}
-                  keyExtractor={item => item.id}
-                  onEndReachedThreshold={0.5}
-                  onEndReached={fetchMoreMovies}
-        />
-      )
-    } else {
-      return (<Text style={styles.noFound}>Aucun film trouvé</Text>)
-    }
+    setSearchPhrase(null);
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <SearchBar
         onSearchPhraseUpdate={onSearchPhraseUpdate}
+        onClear={onSearchClear}
       />
-      <View>
+      <View style={styles.secondContainer}>
         { loading && (
           <ActivityIndicator size="large" />
+        ) }
+        { nothingFound && (
+          <View style={styles.nothingFound}>
+            <Icon name="warning" size={36} color="black" />
+            <Text>Aucun film trouvé</Text>
+          </View>
         ) || (
-         <MoviesList />
+          <FlatList data={movies}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id}
+                    onEndReachedThreshold={0.5}
+                    onEndReached={fetchMoreMovies}
+          />
         )}
       </View>
     </SafeAreaView>

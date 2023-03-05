@@ -6,7 +6,7 @@ export const makeGetRequest = async (endpoint, params) => {
       params.language = "fr-FR";
     }
 
-    const response = await useAxios.get(endpoint, {params});
+    const response = await useAxios.get(endpoint, {params})
     return response.data;
   } catch (error) {
     console.error('An error occurred during the axios request');

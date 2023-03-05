@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Text, View, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { Image, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { IMAGE_URI } from '../../services/TMDBService';
 import Icon from "react-native-vector-icons/FontAwesome";
 
